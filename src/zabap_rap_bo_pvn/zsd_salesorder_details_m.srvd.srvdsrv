@@ -1,0 +1,12 @@
+@EndUserText.label: 'Service Definition for Sales Order Details Managed Case'
+define service ZSD_SALESORDER_DETAILS_M {
+  expose ZC_SALESORDER_HEADER_TP as SalesOrderHeader;
+  expose ZC_SALESORDER_ITEM_TP as SalesOrderItems;
+  expose ZC_SALESORDER_TYPE_PS as SalesOrderTypes;
+  expose ZC_SALESORG_CDS_PS as SalesOrg;
+  expose ZC_MATERIAL_MASTER1_CDS_PS as MaterialMaster;
+  expose ZC_COMPANYCODE_CDS_PS as CompanyCode;
+  expose ZC_CURRENCYDETAILS_CDS_PS as CurrencyDetails;
+  expose ZC_CUSTOMER_MASTER_DETAILS_PS as CustomerMaster;
+  expose ZC_SOSTATUS_VALUEHELP_CDS_PS as SalesOrderStatus;
+}

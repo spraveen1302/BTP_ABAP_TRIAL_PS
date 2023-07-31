@@ -1,0 +1,23 @@
+//This is Behaviour Projection View
+projection;
+strict ( 1 );
+
+define behavior for ZC_SALESORDER_HEADER_TP alias SOHeader
+{
+  // Here you remove either of the functionality based on your requirement.
+  // Say if you dont want update operation for the functionality. only Create and Delete Required.
+  // you can remove it here
+  use create;
+  use update;
+  use delete;
+
+  use association _SOItems { create; }
+}
+
+define behavior for ZC_SALESORDER_ITEM_TP alias SOItems
+{
+  use update;
+  use delete;
+
+  use association _SOHeader;
+}

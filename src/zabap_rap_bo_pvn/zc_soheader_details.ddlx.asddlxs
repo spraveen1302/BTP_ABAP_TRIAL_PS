@@ -1,0 +1,83 @@
+ @Metadata.layer: #CORE
+ 
+ @UI.headerInfo:{ 
+                   typeName: 'Sales Order Document',
+                   typeNamePlural: 'Sales Order Documents',
+                   
+       description:{  label: 'Manage Sales Order' }
+ }
+annotate entity ZC_SALESORDER_HEADER_TP
+    with 
+{
+
+    @UI.lineItem: [{ position: 10, importance: #HIGH, label: 'Sales Order No' }]
+    @UI.selectionField: [{ position: 10 }]
+    ECommVbeln;
+    
+    @UI.lineItem: [{ position: 20, importance: #HIGH, label: 'Sales Order Type' }]   
+    @UI.selectionField: [{ position: 20 }]
+    SoType;
+    
+//    @UI.lineItem: [{ position: 30, label: 'Description' }]    
+//    ShortText;
+    
+    @UI.lineItem: [{ position: 30, importance: #HIGH, label: 'CompanyCode' }] 
+    @UI.selectionField: [{ position: 50 }]   
+    Bukrs;
+    
+    @UI.lineItem: [{ position: 40, importance: #HIGH, label: 'SalesOrg' }]
+    @UI.selectionField: [{ position: 60 }]
+    Vkorg;
+    
+    @UI.lineItem: [{ position: 50, importance: #HIGH, label: 'SO Status' }]
+    @UI.selectionField: [{ position: 20 }]
+    SoStatus;
+    
+//    @UI.lineItem: [{ position: 60, label: 'Status Text' }]    
+//    StatusText;
+
+    @UI.lineItem: [{ position: 60, importance: #HIGH }]
+    @UI.selectionField: [{ position: 40 }]
+    SoldToPartyKunnr;
+      
+//    name1;
+
+    @UI.lineItem: [{ position: 70, importance: #LOW, label: 'Total Base Price' }]
+    Total_BasePrice;
+    
+    @UI.lineItem: [{ position: 80, importance: #LOW, label: 'Total SGST Tax Amount' }]
+    Total_Sgsttxamt;
+    
+    @UI.lineItem: [{ position: 90, importance: #LOW, label: 'Total IGST Tax Amount' }]
+    Total_Igsttxamt;
+    
+    @UI.lineItem: [{ position: 100, importance: #LOW, label: 'Total CGST Tax Amount' }]
+    Total_Cgsttxamt;
+    
+    @UI.lineItem: [{ position: 110, importance: #HIGH, label: 'Gross_Amount' }]
+    GrossAmount;
+    
+    @UI.lineItem: [{ position: 120, importance: #LOW, label: 'Currency' }]
+    Currency;
+    
+    @UI.lineItem: [{ position: 130, importance: #HIGH, label: 'Core Sales Doc No' }]
+    CoreVbeln;
+    
+    @UI.lineItem: [{ position: 140, importance: #HIGH, label: 'Createdeby' }]
+    CreatedBy;
+    
+    @UI.lineItem: [{ position: 150, importance: #HIGH, label: 'CreatedDate' }]
+    CreatedDate;
+    
+    @UI.lineItem: [{ position: 160, importance: #HIGH, label: 'CreatedTime' }]
+    CreatedTime;
+    
+    @UI.lineItem: [{ position: 170, importance: #HIGH, label: 'ChangedDate' }]
+    ChangedData;
+    
+    @UI.lineItem: [{ position: 180, importance: #HIGH, label: 'ChangedTime' }]
+    ChangedTime;
+    
+    
+    
+}

@@ -1,0 +1,270 @@
+@Metadata.layer: #CORE
+
+//For Object Overview Page(OVP)
+@UI:{ headerInfo:{ 
+            //Enable any image under header section of OVP ImageUrl Annotation to be added       
+                   imageUrl: 'SOTypeImageUrl',
+                   typeName: 'Sales Order Document',
+                   typeNamePlural: 'Sales Order Documents',
+                   
+    //  -------------------------For Subscreen of the Overview Page by navigating for detail information----------------------//                                     
+//Screen Title is picked from SO Description
+//Screen Title Description is picked from SO Type Description                   
+                   title:{ value: 'ShortText' },
+                   description: {  label: 'Manage Sales Orders', 
+                                   type: #STANDARD, 
+                                   value: 'SO_Type_Description' } },
+
+// Default Setting for the page 
+//Enabling for the particular field ( Sales Order Status field with desc order)                   
+      presentationVariant: [{sortOrder: [{ by: 'SoStatus', direction: #DESC }]}] 
+                 
+    }
+                   
+annotate view ZC_SO_HEADER_DETAILS
+    with 
+{
+
+// with UI Facet annotation will be able create OVP
+// and build pages with multiple sections
+@UI.facet: [
+            
+            { 
+             id: 'Collection',
+             purpose: #STANDARD,
+ // -------------------------PARENT UI FACET -----------------------------------//
+ // ---------------------- HEADER INFORMATION --------------------------------//
+             type: #COLLECTION,    
+             label: 'Header Details'
+            },
+            
+ //Under One Parent UI Facet - we can able to create multiple child Facet.
+ // All the child facet under should tagged under parent ID or facet.
+ // Ex: In this Case, Parent - Collection and Child Facet are
+ //     BASIC INFO
+ //     ORG INFO
+ //     AMOUNT INFO
+ //     OTHER INFO
+ 
+            { 
+ // CHILD UI FACET //           
+             id: 'BasicInfo',
+             purpose: #STANDARD,
+             parentId: 'Collection',
+             position: 10,                                    
+             targetQualifier: 'BasicGroup', 
+             type: #FIELDGROUP_REFERENCE,
+             label: 'Basic Data' 
+            },
+      
+            
+            
+            { 
+ // CHILD UI FACET //           
+             id: 'OrgInfo',
+             purpose: #STANDARD,
+             parentId: 'Collection',
+             position: 20,
+             targetQualifier: 'OrgGroup', 
+             type: #FIELDGROUP_REFERENCE,
+             label: 'Organisation Data' 
+            },
+     
+     
+            
+            { 
+ // CHILD UI FACET //           
+             id: 'AmountInfo',
+             purpose: #STANDARD,
+             parentId: 'Collection',
+             position: 30,
+             targetQualifier: 'AmtGroup', 
+             type: #FIELDGROUP_REFERENCE,
+             label: 'Amount Summary' 
+            },
+      
+      
+            
+            { 
+ // CHILD UI FACET //           
+             id: 'OtherInfo',
+             purpose: #STANDARD,
+             parentId: 'Collection',
+             position: 30,
+             targetQualifier: 'OtherGroup', 
+             type: #FIELDGROUP_REFERENCE,
+             label: 'Other Details' 
+            },
+            
+            
+            
+            { 
+ // -------------------------PARENT UI FACET -----------------------------------// 
+ // -------------------------- ITEM DETAILS  --------------------------------//        
+             id: 'ItemsInfo',
+             purpose: #STANDARD,
+             type: #LINEITEM_REFERENCE,
+             position: 20,                                     // For Header Position 10
+             targetElement:'_salesitm',                        // Line Item data derived from association _salesitm'
+             label: 'Sales Order Item Details'
+            },
+            
+            
+            
+   // To display any highlighted fields in header section 
+   // Purpose as #HEADER , TYPE as #DATAPOINT_REFERENCE
+   // Idetifier to Group under the header - targetQualifier as any name ( Status ) with
+   // Specifying the position 
+            { 
+             id: 'Header1',
+             purpose: #HEADER,
+             type: #DATAPOINT_REFERENCE,
+             targetQualifier: 'Status',
+             position: 10
+            },
+   // Every Field which needs to highlighted should have separate datapoint reference         
+            { 
+             id: 'Header2',
+             purpose: #HEADER,
+             type: #DATAPOINT_REFERENCE,
+             targetQualifier: 'GrossAmt',
+             position: 20
+            },       
+            
+            { 
+             id: 'Header3',
+             purpose: #HEADER,
+             type: #DATAPOINT_REFERENCE,
+             targetQualifier: 'SODate',
+             position: 30
+            },
+            
+            { 
+             id: 'Header4',
+             purpose: #HEADER,
+             type: #DATAPOINT_REFERENCE,
+             targetQualifier: 'SOTime',
+             position: 40
+            }         
+            
+           ]
+
+// Annotation of UI.lineItem - help to place field at particular position with ranking feature and labelling 
+ @UI.lineItem: [{ position: 10, importance: #HIGH, label: 'Sales Order Document' }]
+ 
+ //Annotation of SelectField used to add the field in the selection screen Bar
+ @UI.selectionField: [{ position: 10 }]
+ 
+ //Field Group Annotation carry over all the field which are specified as #FIELDGROUPREFERENCE
+ //Will display under the section
+ @UI.fieldGroup: [{ position: 10, label: 'Purchase Order', qualifier: 'BasicGroup' }]
+ SalesDoc_No;    
+ 
+ 
+ @UI.lineItem: [{ position: 20, label: 'Sales Order Type' }]
+ @UI.selectionField: [{ position: 20 }]
+ @UI.fieldGroup: [{ position: 20, label: 'Sales Order Type', qualifier: 'BasicGroup' }]
+ SoType;          
+ 
+ 
+// @UI.lineItem: [{ position: 30, importance: #HIGH, label: 'Sales Order Type Description' }]
+// SO_Type_Description;
+
+ @UI.lineItem: [{ position: 30, importance: #HIGH, label: 'Company Code' }]
+ @UI.selectionField: [{ position: 50 }]
+ @UI.fieldGroup: [{ position: 10, label: 'CompanyCode', qualifier: 'OrgGroup' }]
+ Bukrs;          
+ 
+ 
+ @UI.lineItem: [{ position: 40, importance: #HIGH, label: 'Sales Organisation' }]
+ @UI.selectionField: [{ position: 60 }]
+ @UI.fieldGroup: [{ position: 20, label: 'Sales Organisation', qualifier: 'OrgGroup' }]
+ Vkorg;
+ 
+ 
+ //CriticalityValue - Without ICon --- criticalityRepresentation: #WITHOUT_ICON
+ //CriticalityValue - With ICon    --- criticalityRepresentation: #WITHI_ICON
+ @UI.lineItem: [{ position: 50, 
+                  importance: #HIGH, 
+                  label: 'Sales Order Status', 
+                  criticalityRepresentation: #WITH_ICON,
+                  criticality: 'CriticalityValue'
+                  }]
+ @UI.selectionField: [{ position: 30 }]
+ @UI.dataPoint:{ title: 'Sales Order Status', criticality: 'CriticalityValue', qualifier: 'Status' }
+ SoStatus;
+ 
+// @UI.lineItem: [{ position: 60, importance: #HIGH, label: 'Status Description' }]
+// StatusText;
+
+
+// @UI.textArrangement: #TEXT_ONLY
+ @UI.lineItem: [{ position: 60, 
+                  importance: #HIGH, 
+                  label: 'Bill To Customer',  
+                  
+// Enabling a Contact Card for the Customer Number/Name  
+// by using Association Name of Customer Master Details.. 
+// UI LineItem level Type and Value Need to be specify also in Consumption View of ZC_CUSTOMER_MASTER_DETAILS_PS
+// Need to Specify @Semantics.( ADDRESS FIELDS - Street/City/Region/Country/Telephone/Email) through that providing
+// a identification to the framework.             
+                  type: #AS_CONTACT, value: '_soldtoparty' }]  
+    
+    
+                      
+ @UI.selectionField: [{ position: 40 }]
+ SoldToPartyKunnr;
+ 
+ 
+// @UI.lineItem: [{ position: 80, importance: #HIGH, label: 'Customer Name' }]
+// name1;
+ @UI.lineItem: [{ position: 70, importance: #LOW, label: 'Total Base Price' }]
+ @UI.fieldGroup: [{ position: 20, label: 'Total Base Price', qualifier: 'AmtGroup' }]
+ Total_BasePrice;
+ 
+ 
+ @UI.lineItem: [{ position: 80, importance: #LOW, label: 'Total SGST Tax Amount' }]
+ @UI.fieldGroup: [{ position: 30, label: 'Total SGST Tax Amount', qualifier: 'AmtGroup' }]
+ Total_Sgsttxamt;
+ 
+ 
+ @UI.lineItem: [{ position: 90, importance: #LOW, label: 'Total IGST Tax Amount' }]
+ @UI.fieldGroup: [{ position: 40, label: 'Total IGST Tax Amount', qualifier: 'AmtGroup' }]
+ Total_Igsttxamt;
+ 
+ 
+ @UI.lineItem: [{ position: 100, importance: #LOW, label: 'Total CGST Tax Amount' }]
+ @UI.fieldGroup: [{ position: 50, label: 'Total CGST Tax Amount', qualifier: 'AmtGroup' }]
+ Total_Cgsttxamt;
+ 
+ 
+ @UI.lineItem: [{ position: 110, importance: #HIGH, label: 'Gross_Amount' }]
+ @UI.fieldGroup: [{ position: 10, label: 'Gross_Amount', qualifier: 'AmtGroup' }]
+ @UI.dataPoint:{ title: 'Gross Amount',  qualifier: 'GrossAmt' }
+ GrossAmount;
+ 
+ 
+ @UI.lineItem: [{ position: 120, importance: #LOW, label: 'Currency' }]
+ Currency;
+  
+  
+ @UI.lineItem: [{ position: 130, importance: #HIGH, label: 'Core Sales Doc No' }]
+  @UI.fieldGroup: [{ position: 30, label: 'Core Sales Doc No', qualifier: 'BasicGroup' }]
+ CoreSO;
+ 
+ 
+ @UI.lineItem: [{ position: 140, importance: #HIGH, label: 'Createdeby' }]
+ @UI.fieldGroup: [{ position: 10, label: 'CreatedBy', qualifier: 'OtherGroup' }]
+ CreatedBy;
+ 
+ 
+ @UI.lineItem: [{ position: 150, importance: #HIGH, label: 'CreatedDate' }]
+ @UI.fieldGroup: [{ position: 20, label: 'CreatedDate', qualifier: 'OtherGroup' }]
+ @UI.dataPoint:{ title: 'Creation Date',  qualifier: 'SODate' }
+ CreatedDate;
+ 
+ 
+ @UI.dataPoint:{ title: 'Creation Time',  qualifier: 'SOTime' }
+ CreatedTime;
+ 
+}

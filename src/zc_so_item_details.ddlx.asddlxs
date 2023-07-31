@@ -1,0 +1,150 @@
+@Metadata.layer: #CORE
+
+//  -------------------------For Subscreen of the Overview Page by navigating for detail information----------------------//  
+
+@UI.headerInfo:{ 
+                  typeName: 'Sales Order Item Details',
+                
+                  title.value: 'Description', 
+                  
+                  //Enable any image under header section of OVP ImageUrl Annotation to be added       
+                  imageUrl: 'Material_ImageUrl',
+                 
+                  description: { label: 'Sales Order Item Details',
+                                 type : #STANDARD, 
+                                 value: 'ECommSalesItemNo' 
+                               }
+               }
+            
+    
+annotate view ZC_SO_ITEM_DETAILS
+    with 
+{
+
+@UI.facet: [
+             { 
+                id:'Collections',                  //Parent UI Facet
+                purpose: #STANDARD,
+                position: 10,
+                type:#COLLECTION,
+                label: 'Item Informations'
+             },
+    
+             {  
+                id:'ItemPartners:',                 //Child UI Facet
+                purpose: #STANDARD,
+                parentId: 'Collections',
+                position: 10,
+
+                targetQualifier: 'PartnerGroup',
+                type: #FIELDGROUP_REFERENCE,
+                label: 'Partner Informations'
+             },
+             
+             { 
+                id:'ItemPrice',                    //Child UI Facet
+                purpose: #STANDARD,
+                parentId: 'Collections',
+                position: 20,
+                
+                targetQualifier: 'ItemPriceGrp',
+                type: #FIELDGROUP_REFERENCE,
+                label: 'Amount Summary:'
+    
+             },
+
+             { 
+                id:'FurtherItemDtls',               //Child UI Facet
+                purpose: #STANDARD,
+                parentId: 'Collections',
+                position: 30,
+                
+                targetQualifier: 'FurtherDetails',
+                type: #FIELDGROUP_REFERENCE,
+                label: 'Other details:' 
+             }
+        
+           ]
+     
+    @UI.lineItem: [{ position: 10, label: 'E-commerce Sale Order', importance: #HIGH }]
+    ECommSalesorder;
+    
+    @UI.lineItem: [{ position: 20, label: 'E-commerce SO Items No', importance: #HIGH }]
+    ECommSalesItemNo;
+    
+ //   @UI.lineItem: [{ position: 30, label: 'Description', importance: #HIGH }]
+ //   Description;
+        
+    @UI.lineItem: [{ position: 40, label: 'Material Number', importance: #HIGH }]
+    Matnr;
+    
+    @UI.lineItem: [{ position: 50, label: 'SoldToParty', importance: #LOW }]
+    @UI.fieldGroup: [{ position: 10, label: 'Sold-To-Party', qualifier: 'PartnerGroup' }]
+    SoldToPartyKunnr;
+    
+    @UI.lineItem: [{ position: 60, label: 'ShipToParty', importance: #LOW }]
+    @UI.fieldGroup: [{ position: 20, label: 'Ship-To-Party', qualifier: 'PartnerGroup' }]
+    ShipToPartyKunnr;
+    
+    @UI.lineItem: [{ position: 70, label: 'BillToParty', importance: #LOW }]
+    @UI.fieldGroup: [{ position: 30, label: 'Bill-To-Party', qualifier: 'PartnerGroup' }]
+    BillToPartyKunnr;
+    
+    @UI.lineItem: [{ position: 80, label: 'PayerKunnr', importance: #LOW }]
+    @UI.fieldGroup: [{ position: 40, label: 'Payer', qualifier: 'PartnerGroup' }]
+    PayerKunnr;
+    
+    @UI.lineItem: [{ position: 90, label: 'Quantity' , importance: #LOW }]
+    @UI.fieldGroup: [{ position: 10, label: 'Quantity', qualifier: 'ItemPriceGrp' }]
+    Fkimg;
+    
+    //@UI.lineItem: [{ position: 100, label: 'Quantity', importance: #HIGH }]
+    //Meins;
+    
+    @UI.lineItem: [{ position: 110, label: 'Base Price' , importance: #LOW }]
+    @UI.fieldGroup: [{ position: 20, label: 'Base Price',qualifier: 'ItemPriceGrp' }]
+    BasePrice;
+    
+    @UI.lineItem: [{ position: 120, label: 'SGST Tax Amount' , importance: #LOW  }]
+    @UI.fieldGroup: [{ position: 30, label: 'SGST Tax Amount',qualifier: 'ItemPriceGrp' }]
+    SgstTaxAmount;
+    
+    @UI.lineItem: [{ position: 130, label: 'CGST Tax Amount' , importance: #LOW }]
+    @UI.fieldGroup: [{ position: 40, label: 'CGST Tax Amount',qualifier: 'ItemPriceGrp' }]
+    CgstTaxAmount;
+    
+    @UI.lineItem: [{ position: 140, label: 'IGST Tax Amount' , importance: #LOW }]
+    @UI.fieldGroup: [{ position: 50, label: 'IGST Tax Amount',qualifier: 'ItemPriceGrp' }]
+    IgstTaxAmount;
+    
+    @UI.lineItem: [{ position: 150, label: 'Currency' , importance: #LOW }]
+    Currency;
+    
+    @UI.lineItem: [{ position: 160, label: 'Core SO' , importance: #LOW }]
+    @UI.fieldGroup: [{ position: 10, label: 'S4 Sales Order No', qualifier: 'FurtherDetails' }]
+    CoreVbeln;
+    
+    @UI.lineItem: [{ position: 170, label: 'Core SO Item No' , importance: #LOW }]
+    @UI.fieldGroup: [{ position: 20, label: 'S4 Sales Order Item No', qualifier: 'FurtherDetails' }]
+    CorePosnr;
+    
+    @UI.lineItem: [{ position: 180, label: 'Changed Date', importance: #HIGH }]
+    @UI.fieldGroup: [{ position: 30, label: 'Last changed date', qualifier: 'FurtherDetails' }]
+    ChangedData;
+    
+    @UI.lineItem: [{ position: 190, label: 'Changed Time' }]
+    @UI.fieldGroup: [{ position: 40, label: 'Last changed Time', qualifier: 'FurtherDetails' }]
+    ChangedTime;
+    
+    
+//    /* Associations */
+//    _currencydet;
+//    _custmaster_billto;
+//    _custmaster_payer;
+//    _custmaster_shipto;
+//    _custmaster_soldto;
+//    _matmaster;
+//    _saleshdr;
+//  
+  
+}
